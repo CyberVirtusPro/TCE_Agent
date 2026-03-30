@@ -32,5 +32,9 @@ line-length = 100
 target-version = "py311"
 src = ["src"]
 
+[tool.ruff.lint]
+# `main.py` ajusta sys.path antes dos imports de `src/` (execução na raiz sem PYTHONPATH).
+per-file-ignores = { "main.py" = ["E402"] }
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
