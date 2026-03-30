@@ -15,8 +15,9 @@ dependencies = [
     "langchain-google-genai>=1.0.1",
     "langsmith>=0.1.30",
     "python-dotenv>=1.0.1",
-    "pinecone-client>=3.2.2",
+    "qdrant-client>=1.8.0",
     "PyMuPDF>=1.24.0", 
+    "langgraph-cli[inmem]>=0.1.55"
 ]
 
 [project.optional-dependencies]

@@ -22,6 +22,10 @@ class AuditoriaState(TypedDict):
     # O uso do 'operator.add' (Reducer) é OBRIGATÓRIO para o Parallel Fan-Out,
     # garantindo que agentes paralelos não sobrescrevam os achados uns dos outros.
     achados: Annotated[List[AchadoAuditoria], operator.add]
+
+    # 2.5. Controle de fluxo: Lista agregadora de análises já concluídas
+    # (ex.: evita que o Supervisor chame o mesmo especialista duas vezes).
+    analises_concluidas: Annotated[List[str], operator.add]
     
     # 3. Saída: O parecer final consolidado pelo Agente Relator
     parecer_final: Optional[ParecerTecnico]

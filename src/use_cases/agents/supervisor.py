@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from use_cases.agents.prompts import PROMPT_SUPERVISOR
 from use_cases.state import AuditoriaState
+from use_cases.state_normalization import achados_do_state, edital_do_state
 
 
 class RoteamentoSupervisor(BaseModel):
@@ -33,8 +34,8 @@ class SupervisorNode:
         self.llm_with_tool = llm.with_structured_output(RoteamentoSupervisor)
 
     def __call__(self, state: AuditoriaState) -> Command:
-        edital = state.get("edital")
-        achados = state.get("achados", [])
+        edital = edital_do_state(state.get("edital"))
+        achados = achados_do_state(list(state.get("achados", [])))
 
         if not edital:
             raise ValueError("O Estado não contém um Edital válido para análise.")
@@ -46,6 +47,7 @@ class SupervisorNode:
             f"Documento a ser analisado: {edital.objeto_licitacao} (Modalidade: {edital.modalidade})\n"
             f"Quantidade de achados até o momento: {len(achados)}\n"
             f"Leis já apontadas nos achados: {tipos_achados_realizados}\n\n"
+            f"Análises já finalizadas: {state.get('analises_concluidas', [])}\n\n"
             "Qual é o próximo agente especialista que deve atuar?"
         )
 

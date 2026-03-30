@@ -23,6 +23,7 @@ from adapters.tools.busca_leis import buscar_lei_14133
 
 # Importações do nosso Domínio e Casos de Uso
 from domain.entities.documentos import Edital
+from use_cases.state_normalization import parecer_do_state
 from use_cases.workflows.grafo import construir_grafo_auditoria
 
 # Carrega as variáveis do arquivo .env
@@ -68,6 +69,7 @@ async def executar_auditoria_simulada() -> None:
         "achados": [],
         "parecer_final": None,
         "erros": [],
+        "analises_concluidas": [],
         "metadata": {
             "run_id": "simulacao-001",
             "law_version": "14133/21",
@@ -86,7 +88,7 @@ async def executar_auditoria_simulada() -> None:
     resultado_final = await grafo_compilado.ainvoke(estado_inicial, config=config)
 
     # 5. EXIBINDO OS RESULTADOS (PARECER TÉCNICO)
-    parecer = resultado_final.get("parecer_final")
+    parecer = parecer_do_state(resultado_final.get("parecer_final"))
     erros = resultado_final.get("erros", [])
 
     if erros:

@@ -8,6 +8,8 @@ ESPECIALISTAS DISPONÍVEIS:
 - "agente_relator": Responsável por consolidar os achados e emitir o Parecer Técnico final. Escolha este SOMENTE quando todas as análises necessárias já tiverem sido concluídas.
 
 Regra Estrita: Retorne apenas o nome do próximo agente e uma breve justificativa técnica para a sua escolha.
+
+Se 'licitacao' já estiver na lista de análises concluídas, você DEVE chamar o 'agente_relator'. NUNCA chame o mesmo especialista duas vezes.
 """
 
 PROMPT_AGENTE_LICITACAO = """Você é o Agente Especialista em Licitações do Tribunal de Contas do Estado do Rio de Janeiro (TCERJ).

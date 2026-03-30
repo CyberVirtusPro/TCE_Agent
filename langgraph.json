@@ -1,0 +1,7 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "auditoria_tcerj": "./src/infrastructure/studio.py:graph"
+  },
+  "env": ".env"
+}

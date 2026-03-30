@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from domain.entities.auditoria import AchadoAuditoria
 from use_cases.agents.prompts import PROMPT_AGENTE_LICITACAO
 from use_cases.state import AuditoriaState
+from use_cases.state_normalization import edital_do_state
 
 
 class ExtracaoLicitacao(BaseModel):
@@ -30,7 +31,7 @@ class AgenteLicitacaoNode:
         self.llm_chain = llm_with_tools.with_structured_output(ExtracaoLicitacao)
 
     def __call__(self, state: AuditoriaState) -> Dict[str, Any]:
-        edital = state.get("edital")
+        edital = edital_do_state(state.get("edital"))
 
         if not edital:
             return {"erros": ["Agente de Licitação falhou: Nenhum edital encontrado no Estado."]}
@@ -51,7 +52,10 @@ class AgenteLicitacaoNode:
 
         try:
             resultado: ExtracaoLicitacao = self.llm_chain.invoke(messages)
-            return {"achados": resultado.achados_encontrados}
+            return {
+                "achados": resultado.achados_encontrados,
+                "analises_concluidas": ["licitacao"],
+            }
 
         except Exception as e:
             return {"erros": [f"Erro na execução do Agente de Licitação: {str(e)}"]}

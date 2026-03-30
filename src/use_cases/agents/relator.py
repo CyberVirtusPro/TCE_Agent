@@ -8,6 +8,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from domain.entities.auditoria import ParecerTecnico
 from use_cases.agents.prompts import PROMPT_AGENTE_RELATOR
 from use_cases.state import AuditoriaState
+from use_cases.state_normalization import achados_do_state, edital_do_state
 
 
 class AgenteRelatorNode:
@@ -17,8 +18,8 @@ class AgenteRelatorNode:
         self.llm_chain = llm.with_structured_output(ParecerTecnico)
 
     def __call__(self, state: AuditoriaState) -> dict[str, Any]:
-        edital = state.get("edital")
-        achados = state.get("achados", [])
+        edital = edital_do_state(state.get("edital"))
+        achados = achados_do_state(list(state.get("achados", [])))
 
         if not edital:
             return {"erros": ["Agente Relator falhou: Nenhum edital no Estado."]}
