@@ -1,0 +1,14 @@
+---
+description: USE WHEN implementing error handling, try/catch blocks, or logging in Python to ensure system observability.
+globs: **/*.py
+alwaysApply: false
+---
+# Error Handling & Logging Guidelines
+
+Este projeto segue as práticas de Clean Code para tratamento de erros e telemetria:
+
+1. **Use Exceções, não Códigos de Retorno:** Nunca retorne códigos de erro (ex: `-1` ou `False`). Lance exceções semânticas detalhando o problema.
+2. **Forneça Contexto:** Toda exceção deve conter uma mensagem de erro clara que registre a intenção da operação que falhou e o tipo de falha.
+3. **Não retorne `None` (Null) e não passe `None`:** Evite métodos que retornam `None` para representar falhas, pois isso gera verificações redundantes e `NullPointerExceptions`. Se não houver resultado, lance uma exceção ou retorne um objeto *Special Case* (ex: uma lista vazia).
+4. **Resiliência em LLMs (Retries):** Para chamadas de rede e APIs de LLM, implemente estratégias de "Adaptive Retry" com *backoff* exponencial para falhas temporárias (ex: limites de taxa HTTP 429).
+5. **Observabilidade (LangSmith):** Integre erros críticos aos *Traces* do LangSmith. Se um nó (Node) do LangGraph falhar, o log deve capturar o `run_id` da execução para facilitar o rastreamento da alucinação ou falha.

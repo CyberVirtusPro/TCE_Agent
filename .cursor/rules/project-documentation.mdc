@@ -1,0 +1,14 @@
+---
+description: USE WHEN generating, updating, or analyzing project documentation like README.md, instructions.md, or roadmap.md.
+globs: *.md, docs/**/*.md
+alwaysApply: false
+---
+# Project Documentation Standards
+
+Este projeto adota uma separação clara de responsabilidades na documentação para facilitar o trabalho de humanos e agentes de IA.
+
+## Diretrizes de Atualização:
+1. **`instructions.md` (Especificação do Projeto):** Utilize este arquivo para descrever a especificação completa do projeto. Ele deve conter as funcionalidades (features), tecnologias utilizadas, estrutura do projeto e passos de build. Sempre que uma nova funcionalidade for adicionada, atualize este arquivo.
+2. **`roadmap.md` (Planejamento):** Mantenha este arquivo atualizado com os marcos (milestones) e funcionalidades futuras, servindo como um guia para o desenvolvimento incremental e planejamento de longo prazo.
+3. **Não duplique código nas regras:** Ao invés de copiar trechos de código ou arquivos inteiros para a documentação ou regras, faça referências aos arquivos originais (ex: apontando para exemplos canônicos), evitando que a documentação fique obsoleta.
+4. **Extração Automática:** Ao ser solicitado para ajudar na documentação, analise o código, extraia comentários relevantes, analise o `README.md` atual e gere a documentação atualizada em formato markdown.

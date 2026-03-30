@@ -1,0 +1,19 @@
+---
+description: USE WHEN writing tests, creating datasets, or implementing evaluations for the AI agents to ensure compliance with LangSmith evaluation frameworks.
+globs: tests/**/*.py
+alwaysApply: false
+---
+# LangSmith Evaluation & Metrics
+
+A validação da qualidade dos agentes no LangGraph deve ser feita via testes offline usando o LangSmith e o pacote `openevals`.
+
+## Padrões de Avaliação (LLM-as-a-judge):
+1. **Métricas Obrigatórias:** Ao avaliar a saída jurídica do agente, foque nas seguintes métricas:
+   - **Faithfulness (Fidelidade):** A resposta deve estar estritamente fundamentada no texto da lei (evitar alucinações).
+   - **Correctness (Correção):** A conclusão jurídica condiz com o `reference_output` (gabarito esperado).
+   - **Relevance (Relevância):** A resposta atende diretamente à verificação solicitada no contrato.
+2. **Implementação do Evaluator:**
+   - Utilize a função `evaluate()` do LangSmith SDK.
+   - Todo teste deve comparar os `inputs` (trecho analisado e pergunta), os `outputs` (resposta do modelo) e os `reference_outputs` (gabarito humano).
+3. **Clean Architecture nos Testes:**
+   - Mantenha a função alvo (`target function`) isolada do avaliador. A função alvo é a invocação do nosso Grafo de Estado (LangGraph).

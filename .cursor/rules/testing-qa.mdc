@@ -1,0 +1,13 @@
+---
+description: USE WHEN writing unit tests, integration tests, or setting up evaluators for AI outputs.
+globs: tests/**/*.py
+alwaysApply: false
+---
+# Testing & QA Standards
+
+A qualidade do código é mantida através de Testes Limpos (Clean Tests) e avaliações contínuas de IA:
+
+1. **Princípios F.I.R.S.T.:** Os testes devem ser Fast (Rápidos), Independent (Independentes), Repeatable (Repetíveis em qualquer ambiente), Self-Validating (Auto-validados com booleanos) e Timely (Oportunos).
+2. **Um Conceito por Teste:** Cada teste deve avaliar apenas uma única lógica ou conceito de negócio. Evite múltiplas asserções desconexas no mesmo teste.
+3. **Mock de Infraestrutura:** Ao testar Casos de Uso (Use Cases) ou Agentes, faça o mock de bancos de dados (ex: Pinecone, Chroma) e APIs externas para garantir isolamento.
+4. **Avaliação de IA (LLM-as-a-Judge):** Para testes de respostas do LangGraph, use os *Evaluators* do LangSmith testando métricas como *Correctness* (Exatidão), *Faithfulness* (Fidelidade ao documento original) e *Relevance* (Relevância).

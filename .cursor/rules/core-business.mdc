@@ -1,0 +1,12 @@
+---
+description: USE WHEN modeling core business rules, entities, Pydantic schemas, or domain logic.
+globs: **/domain/**/*.py, **/entities/**/*.py, **/schemas/**/*.py
+alwaysApply: false
+---
+# Core Business & Domain Guidelines
+
+O coração da aplicação é a sua camada de Domínio, seguindo a Clean Architecture:
+
+1. **Independência de Frameworks:** Entidades (Entities) e esquemas Pydantic que representam regras de negócios corporativas NÃO devem herdar nem importar dependências de frameworks externos, bancos de dados ou bibliotecas de UI.
+2. **Linguagem Ubíqua:** Use nomes que refletem o *Domínio do Problema* (Termos Jurídicos, Contratos, Leis) em vez do *Domínio da Solução* (Termos de Ciência da Computação). Ex: `Contrato` em vez de `DocumentDataProcessor`.
+3. **Pydantic como Contrato:** A validação estrita de tipos deve ocorrer na borda do domínio usando `BaseModel` do Pydantic.

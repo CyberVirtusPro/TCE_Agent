@@ -1,0 +1,13 @@
+---
+description: USE WHEN writing or modifying system prompts, LLM instructions, or LangChain @tool decorators.
+globs: **/prompts.py, **/*agent*.py, **/tools/**/*.py
+alwaysApply: false
+---
+# Prompt Engineering & Tool Guidelines
+
+Para garantir que o modelo fundacional execute o raciocínio correto (ReAct) com segurança:
+
+1. **Separação de Instruções:** Mantenha os prompts do sistema separados do código lógico de controle. Use arquivos dedicados (ex: `prompts.py`) ou gerencie via repositórios de prompts (ex: LangSmith Prompt Hub).
+2. **Docstrings em Ferramentas:** Toda função anotada com `@tool` do LangChain DEVE ter uma `docstring` extremamente clara e descritiva. O LLM utiliza essa descrição para decidir *quando* e *como* invocar a ferramenta.
+3. **Saídas Estruturadas:** Ao pedir que o LLM extraia dados (ex: classificação de um documento), use Pydantic (via `with_structured_output`) para forçar um JSON previsível e evitar processamento manual de strings.
+4. **Contexto Focado:** Não insira o histórico inteiro em cada prompt indiscriminadamente. Forneça apenas o contexto relevante recuperado (RAG) para não poluir a janela de contexto do modelo.

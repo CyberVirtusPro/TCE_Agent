@@ -1,0 +1,18 @@
+---
+description: USE WHEN creating or modifying LangGraph state objects, reducer functions, nodes, or checkpointing.
+globs: **/graphs/**/*.py, **/workflows/**/*.py, **/*graph*.py
+alwaysApply: false
+---
+# LangGraph State Management (2025/2026 Standards)
+
+Para arquiteturas multi-agentes consistentes no ecossistema TCERJ:
+
+1. **Esquema Explícito (TypedDict):** Defina todo Estado Global utilizando `TypedDict` do Python com anotações de tipo rígidas (`Type Hints`) para que toda a comunicação entre agentes seja previsível.
+
+2. **Atualizações via Reducers:** Para propriedades que precisam ser agregadas e não sobreescritas (como o histórico de mensagens ou lista de extrações), use funções `reducer`, como `Annotated[list, add]` ou `operator.add`. Isso evita perda silenciosa de dados no *Parallel Fan-Out*.
+
+3. **Padrão de Roteamento Dinâmico (Routing):** Para fluxos complexos de decisão do Supervisor, prefira retornar objetos `Command(goto='agente_especialista', update={...})` em vez de criar múltiplas `Conditional Edges` rígidas. Se usar Conditional Edges simples, retorne constantes de strings literais (`Literal`).
+
+4. **Saídas Estruturadas (Pydantic):** Sempre que um agente extrair dados legais no grafo, a saída do LLM DEVE ser forçada com `.with_structured_output(SchemaPydantic)` para garantir consistência estrutural e integração com o domínio.
+
+5. **Rastreabilidade Jurídica no Estado:** Todo `State` que represente um fluxo de análise jurídica deve incluir um campo `metadata: dict` para carregar a versão da lei base (ex: `law_version="14133/21"`) e o `run_id`, garantindo a observabilidade do parecer.

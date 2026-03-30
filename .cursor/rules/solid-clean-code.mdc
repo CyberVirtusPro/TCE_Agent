@@ -1,0 +1,15 @@
+---
+description: Impõe regras de Clean Code e princípios SOLID na escrita de código Python.
+globs: **/*.py
+alwaysApply: true
+---
+# SOLID & Clean Code Guidelines
+
+Ao escrever ou refatorar código, siga estritamente estas diretrizes:
+
+- **Single Responsibility Principle (SRP):** Cada função, classe ou nó de agente deve ter apenas um motivo para mudar e fazer apenas UMA coisa.
+- **Dependency Inversion Principle (DIP):** Dependa de abstrações, não de implementações concretas.
+- **Nomes Significativos:** Use nomes de variáveis e métodos que revelem a intenção. Evite abreviações obscuras ou nomes genéricos como `data`, `info` ou `manager`.
+- **Funções Pequenas:** Funções devem ser curtas e descer apenas um nível de abstração por vez.
+- **Tratamento de Erros:** Prefira usar Exceptions em vez de retornar códigos de erro (Return Codes). Trate exceções em locais apropriados e não silencie falhas.
+- **Tipagem Estrita:** Use Type Hints rigorosamente (`typing` do Python) em todas as assinaturas de funções e métodos.

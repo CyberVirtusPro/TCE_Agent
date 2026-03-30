@@ -1,0 +1,16 @@
+---
+description: USE WHEN generating legal opinions, auditing contracts, or referencing laws (e.g., Lei 14133, LGPD, TCERJ Norms).
+globs: **/agents/specialists/**/*.py, **/use_cases/audits/**/*.py
+alwaysApply: false
+---
+# Legal Compliance & Citation Standards
+
+Devido à natureza crítica das aplicações para o Tribunal de Contas (TCERJ), a extração e geração de pareceres por LLMs devem seguir regras estritas:
+
+1. **Citação Obrigatória:** Qualquer apontamento de irregularidade, inconsistência ou validação de conformidade DEVE citar o artigo, inciso e a lei correspondente (ex: "Violação do Art. 72 da Lei 14.133/21").
+
+2. **Extração de Evidência (Quote):** Ao apontar uma falha em um documento, o agente especialista deve obrigatoriamente preencher um campo de evidência (ex: `quote`) extraindo aspas exatas do texto original analisado para fundamentar sua decisão.
+
+3. **Tom de Voz e Estilo:** O output gerado pelo LLM deve ser puramente técnico, imparcial e impessoal, seguindo estritamente o padrão de redação oficial de órgãos de controle e auditoria.
+
+4. **Diferenciação Normativa:** Os prompts e schemas devem guiar o LLM para distinguir claramente o peso e a hierarquia entre a Legislação Federal (ex: Leis Ordinárias) e as Instruções Normativas / Jurisprudências internas do próprio TCERJ.

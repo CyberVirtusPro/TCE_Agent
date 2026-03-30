@@ -1,0 +1,19 @@
+---
+description: USE WHEN handling environment variables, API keys, database connections, Dockerfiles, or infrastructure configuration.
+globs: **/*.py, docker-compose.yml, .env.example
+alwaysApply: false
+---
+# Security & Infrastructure Guidelines (TCERJ)
+
+Na camada externa de Frameworks e Drivers, a segurança e conformidade são críticas:
+
+1. **Gestão de Segredos:** NENHUMA chave de API (OpenAI, Gemini, LangSmith, Bancos) deve ser "hardcoded" no código-fonte. Utilize o módulo `os` ou `python-dotenv` para carregar dados sensíveis.
+
+2. **Princípio de Inversão de Dependência (DIP):** Para acesso à infraestrutura, o código deve depender de abstrações (Interfaces/Gateways), com a implementação real injetada via injeção de dependência.
+
+3. **Privacidade e LGPD:** Antes de enviar trechos de documentos corporativos para APIs de LLM externas, avalie se o Use Case exige a identificação das partes. Se não exigir, implemente um nó ou rotina de "Anonymizer" para mascarar PII (como CPFs e nomes físicos).
+
+4. **Controle de Custos e Loops (Recursion Limit):** Em produção, como usamos loops reflexivos de validação, é OBRIGATÓRIO definir o limite de iterações (`recursion_limit` no LangGraph) na compilação do grafo para prevenir loops infinitos caros gerados por alucinações.
+   - *Padrão sugerido:* 10 a 15 para auditorias simples; 25 para pareceres complexos.
+
+5. **Sanitização de Entrada:** Qualquer PDF ou documento corporativo inserido no sistema deve ser higienizado, validado em tipo e tamanho antes do processamento vetorial ou extração.

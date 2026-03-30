@@ -1,0 +1,14 @@
+---
+description: USE WHEN writing code, adding docstrings, or updating inline code comments to ensure Clean Code principles.
+globs: **/*.py, **/*.ts
+alwaysApply: false
+---
+# Clean Code: Comments and Inline Documentation
+
+Os comentários não devem compensar um código mal escrito. O código deve ser a principal fonte de verdade.
+
+## Regras para Comentários:
+1. **Explique a Intenção (O "Porquê"):** Escreva comentários apenas para explicar decisões de design, lógicas de negócios complexas ou esclarecer a intenção por trás de um bloco de código específico. O "como" o código faz algo deve estar claro pela nomenclatura de variáveis e funções.
+2. **Evite Comentários Redundantes e Ruído:** Não crie comentários que apenas repitam o que a assinatura da função já diz (ex: não comente "retorna o usuário" em uma função chamada `get_user`).
+3. **Código Comentado (Zombie Code):** NUNCA deixe código comentado no arquivo final. O controle de versão (Git) já mantém o histórico. Se o código não é mais usado, exclua-o.
+4. **Comentários de TODO:** Utilize comentários `TODO` no formato `// TODO: [Ação]` apenas para sinalizar trabalhos futuros legítimos que não podem ser feitos no momento, mas remova-os assim que a tarefa for concluída.

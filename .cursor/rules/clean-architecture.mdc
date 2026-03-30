@@ -1,0 +1,28 @@
+---
+description: USE WHEN creating, modifying, or reviewing architectural layers, modules, folder structures, or dependencies to enforce Clean Architecture principles.
+globs: **/*.py
+alwaysApply: false
+---
+# Clean Architecture & Dependency Rule (2025/2026 Standards)
+
+Este projeto segue rigorosamente a Clean Architecture.
+O objetivo é manter o domínio isolado e garantir que a Regra de Dependência seja respeitada (dependências apontam SEMPRE de fora para dentro).
+
+## Camadas Arquiteturais e Responsabilidades:
+
+1. **Entities (Domínio/Esquemas):** Contém os modelos de dados base (Data Structures) e regras de negócio corporativas utilizando puramente `Pydantic` (ex: `TicketState`, `AnaliseLegal`).
+   - **Regra de Isolamento (PROIBIDO):** NUNCA dependem de frameworks externos. É estritamente proibido usar `from langgraph... import` ou `from langchain... import` dentro desta camada. Se precisar de um tipo do LangGraph (ex: `State`), defina um `Protocol` ou use um `TypedDict` nativo que o Use Case converterá depois.
+
+2. **Use Cases (Casos de Uso / Lógica de Agentes):** Contém a lógica de negócio da aplicação, a orquestração dos agentes (LangGraph nodes e grafos) e o roteamento (Supervisor).
+   - **Regra:** Dependem exclusivamente das Entities. Eles definem as abstrações (Interfaces/Protocols) que a camada de infraestrutura deverá implementar.
+
+3. **Interface Adapters (Adaptadores e Ferramentas):** Fazem a tradução entre o formato do mundo externo e o formato dos Use Cases.
+   - **Regra:** Contém os decoradores `@tool` do LangChain, formatadores de saída (Output Parsers) e adaptadores de APIs. Os dados que entram devem ser convertidos em Entities Pydantic assim que passam por esta camada.
+
+4. **Frameworks & Drivers (Infraestrutura):** Contém os detalhes técnicos voláteis: configuração de bancos vetoriais (Pinecone, Chroma), clientes LLM específicos (OpenAI, Gemini), web servers (FastAPI).
+   - **Regra:** É a camada mais externa. Depende de todas as outras, mas NENHUMA outra camada depende dela.
+
+## Regras Estritas de Implementação:
+- **Inversão de Dependência (DIP):** NUNCA faça chamadas diretas a bancos de dados ou a SDKs de LLM específicos dentro dos Use Cases. Chame abstrações (Repositories/Gateways).
+- **Sem Vazamento de Infraestrutura:** Respostas brutas de APIs de IA (ex: `AIMessage`) ou modelos ORM não devem transitar soltas entre camadas.
+- **Pragmatismo:** Mantenha a separação lógica, mas evite overengineering se a complexidade atual não exigir.

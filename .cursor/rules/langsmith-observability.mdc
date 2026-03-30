@@ -1,0 +1,19 @@
+---
+description: USE WHEN configuring LangChain/LangGraph agents or modifying environment variables to ensure LangSmith observability and tracing is correctly applied.
+globs: **/*.py
+alwaysApply: false
+---
+# LangSmith Observability & Tracing Guidelines
+
+Este projeto utiliza o LangSmith para rastreamento (Tracing) e monitoramento do ciclo de vida das requisições dos agentes jurídicos.
+
+## Regras de Configuração e Rastreamento:
+1. **Variáveis de Ambiente Obrigatórias:** Todo agente ou grafo (LangGraph) que invocar um LLM DEVE ter acesso às seguintes variáveis:
+   - `LANGSMITH_TRACING="true"`
+   - `LANGSMITH_API_KEY`
+   - `OPENAI_API_KEY` (ou a chave do provedor utilizado)
+2. **Separação de Ambientes:** Utilize projetos (tags ou workspaces) diferentes no LangSmith para isolar traces de Desenvolvimento (Dev) e Produção (Prod), evitando a poluição dos dados analíticos.
+3. **Gerenciamento de Custos (Sampling):** Em ambientes de produção com alto volume, configure uma taxa de amostragem (sampling rate). Não rastreie 100% das chamadas em produção; avalie apenas uma porcentagem (ex: 10%) para controlar custos.
+4. **Conceitos de Rastreamento:**
+   - **Trace:** Trate o Trace como a execução completa (desde o input do trecho do documento até o relatório final).
+   - **Run:** Trate cada Run como as sub-tarefas (ex: recuperação no banco vetorial, invocação da tool `buscar_lei`).
