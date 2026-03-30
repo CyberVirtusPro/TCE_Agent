@@ -22,7 +22,8 @@ Este arquivo serve como o "System Prompt Global" para agentes de IA (como Cursor
 
 ## 🚀 Comandos de Build, Testes e Observabilidade
 - **Testes Unitários/Domínio:** `pytest tests/domain/`
-- **Executar Aplicação (Local):** `uvicorn main:app --reload`
+- **Executar CLI (Simulação do Grafo):** `python main.py`
+- **Executar API Web (FastAPI):** `uvicorn src.infrastructure.server:app --reload`
 - **Avaliação de IA (LangSmith):** O agente deve priorizar a criação e execução de scripts de avaliação (`LLM-as-a-judge`) para garantir *Correctness*, *Faithfulness* e *Relevance* nas saídas dos grafos.
 - **Autocorreção:** O agente deve sempre tentar rodar comandos de testes programáticos após alterações e corrigir falhas de tipagem ou de assertions antes de finalizar uma tarefa.
 

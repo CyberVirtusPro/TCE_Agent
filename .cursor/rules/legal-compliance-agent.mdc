@@ -1,6 +1,6 @@
 ---
-description: USE WHEN generating legal opinions, auditing contracts, or referencing laws (e.g., Lei 14133, LGPD, TCERJ Norms).
-globs: **/agents/specialists/**/*.py, **/use_cases/audits/**/*.py
+description: USE WHEN generating legal opinions, auditing contracts, or referencing laws (14133, LGPD).
+globs: **/agents/**/*.py, **/use_cases/workflows/**/*.py
 alwaysApply: false
 ---
 # Legal Compliance & Citation Standards

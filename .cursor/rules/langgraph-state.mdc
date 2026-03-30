@@ -1,6 +1,6 @@
 ---
 description: USE WHEN creating or modifying LangGraph state objects, reducer functions, nodes, or checkpointing.
-globs: **/graphs/**/*.py, **/workflows/**/*.py, **/*graph*.py
+globs: **/workflows/**/*.py, **/state.py, **/*graph*.py
 alwaysApply: false
 ---
 # LangGraph State Management (2025/2026 Standards)
