@@ -15,6 +15,11 @@ _SRC = Path(__file__).resolve().parent / "src"
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
+from infrastructure.env_bootstrap import configurar_ambiente_antes_do_langchain
+
+# `.env` e tracing LangSmith precisam estar prontos ANTES de importar LangChain.
+configurar_ambiente_antes_do_langchain()
+
 # Dependência de Infraestrutura (Driver de LLM)
 from langchain_openai import ChatOpenAI
 
@@ -26,7 +31,7 @@ from domain.entities.documentos import Edital
 from use_cases.state_normalization import parecer_do_state
 from use_cases.workflows.grafo import construir_grafo_auditoria
 
-# Carrega as variáveis do arquivo .env
+# Compatível com trechos que ainda chamam load_dotenv() (idempotente com override=False padrão)
 load_dotenv()
 
 
@@ -82,7 +87,7 @@ async def executar_auditoria_simulada() -> None:
 
     # 4. EXECUTANDO O GRAFO
     # O limite de recursão (recursion_limit) nos protege contra loops infinitos de alucinação
-    config = {"recursion_limit": 15}
+    config = {"recursion_limit": 3}
 
     # Executamos o grafo de forma assíncrona (ideal para o FastAPI futuramente)
     resultado_final = await grafo_compilado.ainvoke(estado_inicial, config=config)

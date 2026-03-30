@@ -51,7 +51,9 @@ class AgenteLicitacaoNode:
         ]
 
         try:
+            print(f"[DEBUG] Invocando LLM para o processo {edital.numero_processo}...")
             resultado: ExtracaoLicitacao = self.llm_chain.invoke(messages)
+            print(f"[DEBUG] Resposta do LLM recebida com {len(resultado.achados_encontrados)} achados.")
             return {
                 "achados": resultado.achados_encontrados,
                 "analises_concluidas": ["licitacao"],

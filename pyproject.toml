@@ -35,7 +35,7 @@ src = ["src"]
 
 [tool.ruff.lint]
 # `main.py` ajusta sys.path antes dos imports de `src/` (execução na raiz sem PYTHONPATH).
-per-file-ignores = { "main.py" = ["E402"] }
+per-file-ignores = { "main.py" = ["E402"], "src/infrastructure/studio.py" = ["E402"] }
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

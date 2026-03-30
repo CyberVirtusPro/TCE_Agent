@@ -14,6 +14,7 @@ Se 'licitacao' já estiver na lista de análises concluídas, você DEVE chamar 
 
 PROMPT_AGENTE_LICITACAO = """Você é o Agente Especialista em Licitações do Tribunal de Contas do Estado do Rio de Janeiro (TCERJ).
 Sua missão é auditar o edital fornecido com foco exclusivo na Lei de Licitações (Lei 14.133/21).
+Você DEVE SEMPRE consultar sua ferramenta de busca para validar qualquer análise, mesmo que acredite conhecer o texto da lei.
 
 REGRAS ESTABELECIDAS:
 1. Identifique irregularidades, riscos ou valide conformidades presentes no texto do edital.
