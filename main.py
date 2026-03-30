@@ -18,6 +18,9 @@ if str(_SRC) not in sys.path:
 # Dependência de Infraestrutura (Driver de LLM)
 from langchain_openai import ChatOpenAI
 
+# Adapters (composition root: instâncias concretas de ferramentas)
+from adapters.tools.busca_leis import buscar_lei_14133
+
 # Importações do nosso Domínio e Casos de Uso
 from domain.entities.documentos import Edital
 from use_cases.workflows.grafo import construir_grafo_auditoria
@@ -41,7 +44,7 @@ async def executar_auditoria_simulada() -> None:
 
     # Injetamos o LLM na nossa fábrica de grafos
     print("[Sistema] Compilando o Grafo de Auditoria...")
-    grafo_compilado = construir_grafo_auditoria(llm)
+    grafo_compilado = construir_grafo_auditoria(llm, ferramentas_licitacao=[buscar_lei_14133])
 
     # 2. CRIANDO O MOCK DO DOCUMENTO (A "Esteira")
     edital_teste = Edital(
