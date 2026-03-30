@@ -1,15 +1,32 @@
 ---
-description: Impõe regras de Clean Code e princípios SOLID na escrita de código Python.
+description: USE WHEN writing or refactoring Python code to enforce Clean Code, SOLID principles, and project naming conventions.
 globs: **/*.py
 alwaysApply: true
 ---
-# SOLID & Clean Code Guidelines
+# SOLID, Clean Code & Naming Conventions
 
-Ao escrever ou refatorar código, siga estritamente estas diretrizes:
+Ao escrever ou refatorar código, siga estritamente estas diretrizes arquiteturais e de estilo para manter a consistência do ecossistema:
 
-- **Single Responsibility Principle (SRP):** Cada função, classe ou nó de agente deve ter apenas um motivo para mudar e fazer apenas UMA coisa.
-- **Dependency Inversion Principle (DIP):** Dependa de abstrações, não de implementações concretas.
-- **Nomes Significativos:** Use nomes de variáveis e métodos que revelem a intenção. Evite abreviações obscuras ou nomes genéricos como `data`, `info` ou `manager`.
-- **Funções Pequenas:** Funções devem ser curtas e descer apenas um nível de abstração por vez.
-- **Tratamento de Erros:** Prefira usar Exceptions em vez de retornar códigos de erro (Return Codes). Trate exceções em locais apropriados e não silencie falhas.
-- **Tipagem Estrita:** Use Type Hints rigorosamente (`typing` do Python) em todas as assinaturas de funções e métodos.
+## 1. Padrões de Nomenclatura e Idioma (Híbrido Intencional)
+Para equilibrar o contexto jurídico do TCERJ com as boas práticas de engenharia de software, adote as seguintes regras de idioma:
+
+- **Domínio e Negócio (Português - pt-BR):** Entidades de negócio, schemas Pydantic, atributos de banco de dados e lógicas diretamente ligadas às leis DEVEM ser nomeados em português. Isso garante a Linguagem Ubíqua do Tribunal.
+  - *Exemplos corretos:* `Edital`, `ParecerTecnico`, `AchadoAuditoria`, `data_publicacao`, `validar_conformidade()`.
+- **Documentação e Logs (Português - pt-BR):** Todas as docstrings, comentários explicativos, mensagens de erro para o usuário e logs de negócio devem ser escritos em português claro, formal e gramaticalmente correto.
+- **Infraestrutura e Padrões Técnicos (Inglês):** Nomenclaturas técnicas universais, sufixos de Design Patterns (Arquitetura), integrações com bibliotecas (LangGraph/FastAPI) e controle de estado DEVEM permanecer em inglês para respeitar a semântica da linguagem.
+  - *Exemplos corretos:* `UserRepository`, `LLMClient`, `similarity_search()`, `AgentState`, `Payload`, `parsed_data`.
+- **Casing (Padrão PEP 8):**
+  - `PascalCase` para Classes, Schemas e TypeDefs (ex: `AnalisadorDeContrato`, `PDFParser`).
+  - `snake_case` para funções, métodos, variáveis e propriedades (ex: `gerar_relatorio()`, `run_id`).
+  - `UPPER_SNAKE_CASE` para Constantes e Variáveis de Ambiente (ex: `LIMITE_VALOR_LICITACAO`, `MAX_RETRIES`).
+
+## 2. Princípios SOLID e Clean Code
+- **Single Responsibility Principle (SRP):** Cada função, classe ou nó de agente (LangGraph) deve ter apenas um motivo para mudar e realizar apenas UMA coisa.
+- **Dependency Inversion Principle (DIP):** Dependa de abstrações (Interfaces/Protocols), não de implementações concretas (ex: injetar o `VectorStore` genérico em vez do `PineconeClient` direto).
+- **Nomes Significativos:** Use nomes que revelem a intenção real. Evite abreviações obscuras ou nomes genéricos e vazios como `data`, `info`, `manager` ou `util`.
+- **Funções Pequenas:** Funções devem ser curtas e descer apenas um nível de abstração por vez. Se a função tem muitos `if/else` ou loops aninhados, extraia-os para métodos auxiliares.
+- **Tratamento de Erros:** Prefira usar Exceptions (`raise ValueError(...)`) em vez de retornar códigos de erro ou booleanos mágicos (`-1` ou `False`). Trate exceções em locais apropriados e nunca silencie falhas (`except Exception: pass` é estritamente proibido).
+- **Tipagem Estrita:** Use Type Hints rigorosamente (`typing` do Python) em TODAS as assinaturas de funções, métodos e retornos (ex: `def buscar_leis(query: str) -> list[Document]:`).
+
+## 3. Gestão de Prompts em Agentes
+- **Gestão de Prompts (Agentes):** NUNCA declare strings longas de *System Prompts* dentro do arquivo de lógica do nó ou do agente. Textos de prompt devem ser sempre extraídos para um arquivo `prompts.py` dedicado dentro do respectivo diretório do agente (ex: `src/use_cases/agents/prompts.py`), mantendo a lógica de código limpa.

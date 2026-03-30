@@ -1,0 +1,36 @@
+[project]
+name = "tce_agent"
+version = "0.1.0"
+description = "Sistema Multi-Agente para auditoria inteligente de documentos e emissão de pareceres de conformidade (TCERJ)."
+readme = "instructions.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.1",
+    "langgraph>=0.0.30",
+    "langchain>=0.1.13",
+    "langchain-openai>=0.1.0",
+    "langchain-google-genai>=1.0.1",
+    "langsmith>=0.1.30",
+    "python-dotenv>=1.0.1",
+    "pinecone-client>=3.2.2",
+    "PyMuPDF>=1.24.0", 
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1.1",
+    "pytest-asyncio>=0.23.5",
+    "ruff>=0.3.4",
+    "openevals>=0.0.1"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

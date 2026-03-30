@@ -16,3 +16,5 @@ Para arquiteturas multi-agentes consistentes no ecossistema TCERJ:
 4. **Saídas Estruturadas (Pydantic):** Sempre que um agente extrair dados legais no grafo, a saída do LLM DEVE ser forçada com `.with_structured_output(SchemaPydantic)` para garantir consistência estrutural e integração com o domínio.
 
 5. **Rastreabilidade Jurídica no Estado:** Todo `State` que represente um fluxo de análise jurídica deve incluir um campo `metadata: dict` para carregar a versão da lei base (ex: `law_version="14133/21"`) e o `run_id`, garantindo a observabilidade do parecer.
+
+6. **Retorno Estrito de Tools (Adapters):** Toda função decorada com `@tool` que será usada por um agente LangGraph DEVE obrigatoriamente converter suas saídas para tipos serializáveis puros (como `str`, `dict` ou `list`). Nunca retorne objetos complexos de bibliotecas de terceiros (como models ORM ou instâncias de SDKs) para evitar quebras no Checkpointing e no State do LangGraph.

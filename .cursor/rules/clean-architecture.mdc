@@ -23,6 +23,7 @@ O objetivo é manter o domínio isolado e garantir que a Regra de Dependência s
    - **Regra:** É a camada mais externa. Depende de todas as outras, mas NENHUMA outra camada depende dela.
 
 ## Regras Estritas de Implementação:
+- **Composition Root (Injeção de Dependência):** A montagem da infraestrutura (instanciar clientes LLM, conectar ao Pinecone) DEVE ocorrer exclusivamente na inicialização da aplicação (ex: `src/infrastructure/server.py` ou `di.py`). Os Use Cases e Agentes recebem essas dependências já prontas, nunca as instanciando diretamente.
 - **Inversão de Dependência (DIP):** NUNCA faça chamadas diretas a bancos de dados ou a SDKs de LLM específicos dentro dos Use Cases. Chame abstrações (Repositories/Gateways).
 - **Sem Vazamento de Infraestrutura:** Respostas brutas de APIs de IA (ex: `AIMessage`) ou modelos ORM não devem transitar soltas entre camadas.
 - **Pragmatismo:** Mantenha a separação lógica, mas evite overengineering se a complexidade atual não exigir.
